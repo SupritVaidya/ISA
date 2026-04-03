@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg isa-navbar px-4 py-3">
+
+  <!-- Logo -->
+  <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/home">
+    <i class="fas fa-spa fa-2x text-isa-orange"></i>
+    <div class="lh-1">
+      <div class="fw-bold text-white" style="font-size: 1rem; letter-spacing: 1px;">INDIAN</div>
+      <div class="text-isa-muted" style="font-size: 0.65rem; letter-spacing: 2px;">STUDENT ASSOCIATION</div>
+    </div>
+  </a>
+
+  <!-- Hamburger -->
+  <button
+    class="navbar-toggler border-0"
+    type="button"
+    (click)="isMenuCollapsed = !isMenuCollapsed">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Links -->
+  <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+    <ul class="navbar-nav mx-auto gap-1">
+      <li class="nav-item">
+        <a class="nav-link isa-nav-link" routerLink="/home" routerLinkActive="isa-active">HOME</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link isa-nav-link" routerLink="/events" routerLinkActive="isa-active">EVENTS</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link isa-nav-link" routerLink="/blog" routerLinkActive="isa-active">BLOG</a>
+      </li>
+<li class="nav-item">
+        <a class="nav-link isa-nav-link" routerLink="/team" routerLinkActive="isa-active">TEAM</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link isa-nav-link" routerLink="/contact" routerLinkActive="isa-active">CONTACT</a>
+      </li>
+    </ul>
+
+    <!-- Join Us CTA -->
+    <a routerLink="/contact" class="btn btn-isa-orange ms-3">
+      Join Us &nbsp;<i class="fas fa-arrow-right"></i>
+    </a>
+  </div>
+
+</nav>

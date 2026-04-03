@@ -1,0 +1,88 @@
+<!-- ── Team Hero ── -->
+<section class="team-hero d-flex align-items-center">
+
+  <!-- Background waves -->
+  <div class="team-waves">
+    <svg viewBox="0 0 1440 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 0 500 Q 300 380 600 450 Q 900 520 1200 420 Q 1350 370 1440 400 L 1440 600 L 0 600 Z"
+            fill="#e86835" opacity="0.12"/>
+      <path d="M 0 540 Q 400 440 700 490 Q 1000 540 1300 460 L 1440 480 L 1440 600 L 0 600 Z"
+            fill="#8b5cf6" opacity="0.1"/>
+      <!-- Mandala hint bottom-left -->
+      <circle cx="80" cy="560" r="120" fill="none" stroke="#e86835" stroke-width="1" opacity="0.15"/>
+      <circle cx="80" cy="560" r="90"  fill="none" stroke="#e86835" stroke-width="1" opacity="0.1"/>
+      <circle cx="80" cy="560" r="60"  fill="none" stroke="#FFCE00" stroke-width="1" opacity="0.1"/>
+    </svg>
+  </div>
+
+  <div class="container position-relative">
+    <div class="row align-items-center g-5">
+
+      <!-- Left: Text -->
+      <div class="col-lg-5 text-white">
+        <h1 class="team-headline fw-bold mb-3">
+          Dedicated Team<br>
+          <span class="text-isa-orange">behind ISA</span>
+        </h1>
+        <p class="text-white-50 mb-2">Meet the passionate people supporting, organising and connecting our community.</p>
+        <p class="text-white-50 mb-4">Koblenz Home Community.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a routerLink="/contact" class="btn btn-isa-orange">
+            Become a Member &nbsp;<i class="fas fa-arrow-right"></i>
+          </a>
+          <a href="#" class="btn btn-follow">
+            Follow Us &nbsp;<i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Group Photo -->
+      <div class="col-lg-7 d-flex justify-content-center">
+        <div class="team-photo-wrap">
+          <div class="team-photo-glow"></div>
+          <img src="https://placehold.co/700x480/1a1a2e/ffffff?text=ISA+Team+Photo" alt="ISA Team" class="team-photo">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Team Members Grid ── -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="fw-bold text-white text-center mb-5">Meet the Team</h2>
+    <div class="row g-4 justify-content-center">
+      @for (member of teamMembers(); track member.id) {
+        <div class="col-md-3">
+          <div class="isa-card text-center p-4">
+            <img [src]="member.imageUrl" [alt]="member.name" class="team-member-img mx-auto mb-3">
+            <h5 class="fw-bold text-white mb-1">{{ member.name }}</h5>
+            <p class="text-white-50 small mb-3">{{ member.role }}</p>
+            <div class="d-flex justify-content-center gap-3">
+              <a [href]="member.linkedIn" target="_blank" class="text-isa-orange">
+                <i class="fab fa-linkedin fa-lg"></i>
+              </a>
+              <a [href]="member.instagram" target="_blank" class="text-isa-purple">
+                <i class="fab fa-instagram fa-lg"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer Strip ── -->
+<footer class="team-footer py-3">
+  <div class="container d-flex flex-wrap align-items-center justify-content-between gap-3">
+    <p class="text-white-50 small mb-0">© 2025 Indian Student Association · All Rights Reserved</p>
+    <div class="d-flex gap-3">
+      <a href="#" class="footer-icon"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="footer-icon"><i class="fab fa-facebook"></i></a>
+      <a href="#" class="footer-icon"><i class="fab fa-linkedin"></i></a>
+      <a href="#" class="footer-icon"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+</footer>

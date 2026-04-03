@@ -1,0 +1,108 @@
+// ── Events Hero ──
+.events-hero {
+  min-height: 100vh;
+  padding: 6rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(232,104,53,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(76,175,80,0.05) 0%, transparent 60%),
+    var(--isa-bg);
+}
+
+.events-icon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 20px rgba(232,104,53,0.8));
+}
+
+.events-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: 4px;
+  text-shadow: 0 0 40px rgba(255,255,255,0.1);
+}
+
+// ── Event List Rows ──
+.event-row {
+  transition: transform 0.2s, box-shadow 0.2s;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+}
+
+// ── Date Badges ──
+.event-badge {
+  width: 72px;
+  min-width: 72px;
+  height: 80px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.badge-month {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+
+.badge-day {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.badge-purple { background: linear-gradient(135deg, #6d28d9, #8b5cf6); }
+.badge-green  { background: linear-gradient(135deg, #15803d, #4caf50); }
+.badge-orange { background: linear-gradient(135deg, #c2410c, #e86835); }
+
+// ── Event CTA Buttons ──
+.event-btn {
+  border: none;
+  border-radius: 25px;
+  padding: 0.5rem 1.4rem;
+  font-weight: 600;
+  color: #fff;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  &:hover { opacity: 0.85; color: #fff; }
+}
+
+.badge-purple-btn { background: linear-gradient(135deg, #6d28d9, #8b5cf6); }
+.badge-green-btn  { background: linear-gradient(135deg, #15803d, #4caf50); }
+.badge-orange-btn { background: linear-gradient(135deg, #c2410c, #e86835); }
+
+// ── Sparkles ──
+.sparkle {
+  position: absolute;
+  border-radius: 50%;
+  animation: sparklePulse 3s ease-in-out infinite;
+}
+
+.es1 { width: 8px;  height: 8px;  background: #FF9933; top: 10%; left: 5%;   animation-delay: 0s;   }
+.es2 { width: 5px;  height: 5px;  background: #8b5cf6; top: 30%; right: 8%;  animation-delay: 1s;   }
+.es3 { width: 6px;  height: 6px;  background: #FFCE00; bottom: 20%; left: 10%; animation-delay: 0.5s; }
+.es4 { width: 4px;  height: 4px;  background: #4caf50; bottom: 30%; right: 5%; animation-delay: 1.5s; }
+
+@keyframes sparklePulse {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.8); }
+}
+
+// ── Gallery Grid ──
+.event-gallery-card {
+  transition: transform 0.2s;
+  &:hover { transform: translateY(-4px); }
+}
+
+.event-gallery-img {
+  height: 220px;
+  object-fit: cover;
+}

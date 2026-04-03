@@ -1,0 +1,29 @@
+.isa-navbar {
+  background-color: rgba(13, 13, 26, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.isa-nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 500;
+  padding: 0.4rem 0.9rem !important;
+  border-radius: 6px;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #ffffff !important;
+  }
+}
+
+.isa-active {
+  color: #ffffff !important;
+  border-bottom: 2px solid var(--isa-orange);
+}
+
+.text-isa-muted {
+  color: rgba(255, 255, 255, 0.5);
+}

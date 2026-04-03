@@ -1,0 +1,68 @@
+<!-- ── Upcoming Events Header ── -->
+<section class="events-hero d-flex flex-column align-items-center justify-content-center text-center">
+
+  <!-- Background sparkles -->
+  <div class="sparkle es1"></div>
+  <div class="sparkle es2"></div>
+  <div class="sparkle es3"></div>
+  <div class="sparkle es4"></div>
+
+  <div class="container position-relative">
+    <div class="events-icon mb-3">🪔</div>
+    <h1 class="events-title fw-bold text-white">UPCOMING EVENTS</h1>
+    <p class="text-white-50 mt-2 mb-5">Join us and be part of our vibrant celebrations &amp; exciting activities.</p>
+
+    <!-- Event List -->
+    <div class="event-list d-flex flex-column gap-3 mb-5">
+      @for (event of events(); track event.id; let i = $index) {
+        <div class="event-row isa-card d-flex align-items-center gap-4 p-3 p-md-4">
+
+          <!-- Date Badge -->
+          <div class="event-badge {{ badgeColors[i % 3] }} flex-shrink-0">
+            <span class="badge-month">{{ event.date | date:'MMM' }}</span>
+            <span class="badge-day">{{ event.date | date:'dd' }}</span>
+          </div>
+
+          <!-- Event Info -->
+          <div class="flex-grow-1 text-start">
+            <h5 class="fw-bold text-white mb-1">{{ event.title }}</h5>
+            <p class="text-white-50 small mb-1">{{ event.description }}</p>
+            <span class="text-white-50 small">
+              <i class="fas fa-map-marker-alt me-1 text-isa-orange"></i>{{ event.location }}
+            </span>
+          </div>
+
+          <!-- CTA -->
+          <a href="#" class="btn event-btn {{ badgeColors[i % 3] }}-btn flex-shrink-0">
+            Join Us &nbsp;<i class="fas fa-arrow-right"></i>
+          </a>
+
+        </div>
+      }
+    </div>
+
+    <a href="#" class="btn btn-isa-orange btn-lg px-5">
+      View Full Calendar &nbsp;<i class="fas fa-arrow-right"></i>
+    </a>
+  </div>
+</section>
+
+<!-- ── Event Gallery Grid ── -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="fw-bold text-white text-center mb-5">Past Highlights</h2>
+    <div class="row g-4">
+      @for (event of events(); track event.id) {
+        <div class="col-md-4">
+          <div class="isa-card overflow-hidden event-gallery-card">
+            <img [src]="event.imageUrl" [alt]="event.title" class="w-100 event-gallery-img">
+            <div class="p-3">
+              <h6 class="fw-bold text-white mb-1">{{ event.title }}</h6>
+              <p class="text-white-50 small mb-0">{{ event.description }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

@@ -1,1 +1,83 @@
-/* You can add global styles to this file, and also import other style files */
+/* ISA Global Styles */
+
+:root {
+  --isa-bg:         #0d0d1a;
+  --isa-bg-card:    rgba(255, 255, 255, 0.05);
+  --isa-orange:     #e86835;
+  --isa-green:      #4caf50;
+  --isa-purple:     #8b5cf6;
+  --isa-text:       #ffffff;
+  --isa-muted:      rgba(255, 255, 255, 0.65);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--isa-bg);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(232, 104, 53, 0.08) 0%, transparent 60%);
+  color: var(--isa-text);
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+/* Accent text utilities */
+.text-isa-orange { color: var(--isa-orange) !important; }
+.text-isa-green  { color: var(--isa-green)  !important; }
+.text-isa-purple { color: var(--isa-purple) !important; }
+
+/* Accent button utilities */
+.btn-isa-orange {
+  background-color: var(--isa-orange);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 0.5rem 1.4rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  &:hover { opacity: 0.85; color: #fff; }
+}
+
+.btn-isa-green {
+  background-color: var(--isa-green);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 0.5rem 1.4rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  &:hover { opacity: 0.85; color: #fff; }
+}
+
+.btn-isa-purple {
+  background-color: var(--isa-purple);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 0.5rem 1.4rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  &:hover { opacity: 0.85; color: #fff; }
+}
+
+.btn-isa-outline-green {
+  background-color: transparent;
+  color: var(--isa-green);
+  border: 2px solid var(--isa-green);
+  border-radius: 25px;
+  padding: 0.5rem 1.4rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  &:hover { background-color: var(--isa-green); color: #fff; }
+}
+
+/* Dark card base */
+.isa-card {
+  background: var(--isa-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+}

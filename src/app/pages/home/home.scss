@@ -1,0 +1,169 @@
+// ── Hero ──
+.hero {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 5%  40%, rgba(100,20,220,0.6)  0%, transparent 45%),
+    radial-gradient(ellipse at 30% 80%, rgba(60,10,140,0.4)   0%, transparent 40%),
+    radial-gradient(ellipse at 20% 10%, rgba(80,30,180,0.3)   0%, transparent 35%),
+    #07071a;
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Background glows ──
+.hero-bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow-left {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(100,20,255,0.4) 0%, rgba(60,10,150,0.2) 50%, transparent 70%);
+  top: -200px;
+  left: -250px;
+}
+
+// ── Sparkles ──
+.sparkle {
+  position: absolute;
+  border-radius: 50%;
+  animation: sparklePulse 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.s1 { width: 6px; height: 6px; background: #FF9933; top: 12%; left: 18%;  animation-delay: 0s;   }
+.s2 { width: 4px; height: 4px; background: #FFCE00; top: 55%; left: 8%;   animation-delay: 0.8s; }
+.s3 { width: 5px; height: 5px; background: #8b5cf6; top: 25%; right: 12%; animation-delay: 0.4s; }
+.s4 { width: 7px; height: 7px; background: #FF9933; top: 70%; right: 22%; animation-delay: 1.2s; }
+.s5 { width: 4px; height: 4px; background: #4caf50; top: 40%; left: 45%;  animation-delay: 1.8s; }
+
+@keyframes sparklePulse {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.8); }
+}
+
+// ── Hero Headline ──
+.hero-headline {
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
+  line-height: 1.2;
+  position: relative;
+  z-index: 1;
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #FF9933, #e86835, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// ── Mini Feature Cards ──
+.mini-card {
+  border-radius: 18px;
+  padding: 1.2rem 1rem;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.2s;
+  &:hover { transform: translateY(-4px); }
+}
+
+.mini-mission { background: linear-gradient(135deg, #4c1d95, #7c3aed); }
+.mini-events  { background: linear-gradient(135deg, #1e1b4b, #3730a3); }
+.mini-stories { background: linear-gradient(135deg, #7c2d12, #e86835); }
+
+.mini-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.4rem;
+  i { color: rgba(255,255,255,0.9); }
+}
+
+.mini-card h5 {
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.mini-desc {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  flex-grow: 1;
+}
+
+.mini-btn {
+  font-size: 0.72rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  border: none;
+  font-weight: 600;
+  color: #fff;
+  align-self: flex-start;
+  margin-top: auto;
+  transition: opacity 0.2s;
+  &:hover { opacity: 0.85; color: #fff; }
+}
+
+.mini-btn-purple { background: rgba(139,92,246,0.5); border: 1px solid rgba(139,92,246,0.6); }
+.mini-btn-blue   { background: rgba(99,102,241,0.5);  border: 1px solid rgba(99,102,241,0.6);  }
+.mini-btn-orange { background: rgba(232,104,53,0.6);  border: 1px solid rgba(232,104,53,0.7);  }
+
+// ── CTA strip ──
+.hero-cta-strip {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+// ── Full-bleed photo ──
+.hero-photo-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 52%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-photo-full {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 30%, black 60%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 30%, black 60%);
+}
+
+// ── Hero content sits above photo ──
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding-top: 5rem;
+  padding-bottom: 4rem;
+}
+
+// ── Rainbow wave at bottom ──
+.hero-rainbow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  pointer-events: none;
+  line-height: 0;
+
+  svg {
+    display: block;
+    width: 100%;
+  }
+}

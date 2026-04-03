@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.misa.hsg.fs.tum.de)"
+    ]
+  }
+}

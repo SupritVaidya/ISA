@@ -1,0 +1,100 @@
+// ── Team Hero ──
+.team-hero {
+  min-height: 85vh;
+  padding: 5rem 0 3rem;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 70% 40%, rgba(232,104,53,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 60%, rgba(139,92,246,0.1) 0%, transparent 50%),
+    var(--isa-bg);
+}
+
+// ── Background waves ──
+.team-waves {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// ── Team headline ──
+.team-headline {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  line-height: 1.15;
+  position: relative;
+  z-index: 1;
+}
+
+// ── Follow button ──
+.btn-follow {
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 25px;
+  padding: 0.5rem 1.4rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  &:hover {
+    border-color: #fff;
+    color: #fff;
+    background: rgba(255,255,255,0.05);
+  }
+}
+
+// ── Team group photo ──
+.team-photo-wrap {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.team-photo-glow {
+  position: absolute;
+  inset: -30px;
+  border-radius: 30px;
+  background: radial-gradient(circle,
+    rgba(232,104,53,0.3) 0%,
+    rgba(139,92,246,0.15) 50%,
+    transparent 80%
+  );
+  filter: blur(25px);
+}
+
+.team-photo {
+  width: 100%;
+  max-width: 620px;
+  border-radius: 24px;
+  position: relative;
+  z-index: 1;
+  object-fit: cover;
+}
+
+// ── Team member cards ──
+.team-member-img {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.1);
+  display: block;
+}
+
+// ── Footer strip ──
+.team-footer {
+  background: rgba(255,255,255,0.03);
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.footer-icon {
+  color: rgba(255,255,255,0.5);
+  font-size: 1.1rem;
+  transition: color 0.2s;
+  &:hover { color: var(--isa-orange); }
+}

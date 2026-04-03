@@ -1,0 +1,55 @@
+.page-header {
+  min-height: 30vh;
+  background: linear-gradient(135deg, #1a0a0a 0%, #0d0d1a 60%, #0a1a2e 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+
+  h1 { color: #fff; }
+  p  { color: rgba(255,255,255,0.6); }
+}
+
+.page-header-accent {
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--isa-orange), var(--isa-green));
+  margin: 0.75rem auto 0;
+  border-radius: 2px;
+}
+
+.login-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 440px;
+}
+
+.form-control {
+  background-color: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: #fff !important;
+  border-radius: 10px;
+
+  &::placeholder { color: rgba(255,255,255,0.35); }
+  &:focus {
+    background-color: rgba(255,255,255,0.08) !important;
+    box-shadow: 0 0 0 3px rgba(232,104,53,0.2) !important;
+    border-color: var(--isa-orange) !important;
+  }
+}
+
+.form-label {
+  color: rgba(255,255,255,0.75);
+  font-weight: 500;
+}
+
+.form-error {
+  color: #ff6b6b;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.text-isa-orange {
+  color: var(--isa-orange);
+  &:hover { text-decoration: underline !important; }
+}

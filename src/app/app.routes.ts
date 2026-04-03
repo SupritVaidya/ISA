@@ -7,5 +7,7 @@ export const routes: Routes = [
   { path: 'blog', loadComponent: () => import('./pages/blog/blog').then(m => m.Blog) },
 { path: 'team', loadComponent: () => import('./pages/team/team').then(m => m.Team) },
   { path: 'contact', loadComponent: () => import('./pages/contact/contact').then(m => m.Contact) },
+  { path: 'login', loadComponent: () => import('./pages/login/login').then(m => m.Login) },
+  { path: 'register', loadComponent: () => import('./pages/register/register').then(m => m.Register) },
   { path: '**', redirectTo: 'home' }
 ];

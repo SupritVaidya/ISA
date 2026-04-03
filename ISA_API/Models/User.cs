@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ISA_API.Models;
@@ -16,6 +16,8 @@ public partial class User
     public string? StudentId { get; set; }
 
     public DateTime CreatedAt { get; set; }
+
+    public string? PasswordHash { get; set; }
 
     public virtual ICollection<EventRegistration> EventRegistrations { get; set; } = new List<EventRegistration>();
 }

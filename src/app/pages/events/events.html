@@ -14,13 +14,13 @@
 
     <!-- Event List -->
     <div class="event-list d-flex flex-column gap-3 mb-5">
-      @for (event of events(); track event.id; let i = $index) {
+      @for (event of upcomingEvents(); track event.id; let i = $index) {
         <div class="event-row isa-card d-flex align-items-center gap-4 p-3 p-md-4">
 
           <!-- Date Badge -->
           <div class="event-badge {{ badgeColors[i % 3] }} flex-shrink-0">
-            <span class="badge-month">{{ event.date | date:'MMM' }}</span>
-            <span class="badge-day">{{ event.date | date:'dd' }}</span>
+            <span class="badge-month">{{ event.eventDate| date:'MMM' }}</span>
+            <span class="badge-day">{{ event.eventDate | date:'dd' }}</span>
           </div>
 
           <!-- Event Info -->
@@ -52,7 +52,7 @@
   <div class="container">
     <h2 class="fw-bold text-white text-center mb-5">Past Highlights</h2>
     <div class="row g-4">
-      @for (event of events(); track event.id) {
+      @for (event of pastEvents(); track event.id) {
         <div class="col-md-4">
           <div class="isa-card overflow-hidden event-gallery-card">
             <img [src]="event.imageUrl" [alt]="event.title" class="w-100 event-gallery-img">

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,6 +25,28 @@ namespace ISA_API.Controllers
         public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
         {
             return await _context.Events.ToListAsync();
+        }
+
+        [HttpGet("upcoming")]
+        public async Task<ActionResult<IEnumerable<Event>>> GetUpcomingEvents()
+        {
+            var upcomingEvents = await _context.Events
+                .Where(e => e.EventDate >= DateTime.UtcNow)
+                .OrderBy(e => e.EventDate)
+                .ToListAsync();
+
+            return upcomingEvents;
+        }
+
+        [HttpGet("past")]
+        public async Task<ActionResult<IEnumerable<Event>>> GetPastEvents()
+        {
+            var pastEvents = await _context.Events
+                .Where(e => e.EventDate < DateTime.UtcNow)
+                .OrderByDescending(e => e.EventDate)
+                .ToListAsync();
+
+            return pastEvents;
         }
 
         // GET: api/Events/5

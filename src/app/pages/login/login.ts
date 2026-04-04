@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component,inject } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-login',
@@ -9,6 +10,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './login.scss',
 })
 export class Login {
+
+  private userService = inject(UserService);
+  private router = inject(Router);
+
+
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -22,9 +28,23 @@ export class Login {
     return this.loginForm.get('password');
   }
 
+  
+
   onSubmit() {
   if (this.loginForm.valid) {
-    console.log(this.loginForm.value);
+    this.userService.login(this.email?.value || '', this.password?.value || '').subscribe({
+      next: (user) => {
+        this.userService.currentUser.set(user);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.router.navigate(['/home']);
+        alert(`Welcome back, ${user.firstName}!`);
+      },
+
+      error: () => {
+        alert('Invalid email or password.');
+      }
+    });
+
   }
 }
 }

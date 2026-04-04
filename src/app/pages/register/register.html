@@ -46,8 +46,8 @@
 
       <div class="mb-4">
         <label class="form-label">Password</label>
-        <input type="password" class="form-control" formControlName="password" placeholder="••••••••">
-        @if (password?.invalid && password?.touched) {
+        <input type="password" class="form-control" formControlName="passwordHash" placeholder="••••••••">
+        @if (passwordHash?.invalid && passwordHash?.touched) {
           <div class="form-error">Password must be at least 6 characters.</div>
         }
       </div>

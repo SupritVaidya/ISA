@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +9,15 @@ using ISA_API.Models;
 
 namespace ISA_API.Controllers
 {
-    [Route("api/[controller]")]
+
+
+  public class LoginRequest
+  {
+    public string Email { get; set; } = null!;
+    public string Password { get; set; } = null!;
+  }
+
+  [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -32,6 +40,18 @@ namespace ISA_API.Controllers
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+        [HttpGet("email/{email}")]
+        public async Task<ActionResult<User>> GetUserByEmail(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
 
             if (user == null)
             {
@@ -99,7 +119,20 @@ namespace ISA_API.Controllers
             return NoContent();
         }
 
-        private bool UserExists(int id)
+    [HttpPost("login")]
+    public async Task<ActionResult<User>> Login([FromBody] LoginRequest request)
+    {
+      var user = await _context.Users
+          .FirstOrDefaultAsync(u => u.Email == request.Email && u.PasswordHash == request.Password);
+
+      if (user == null)
+        return Unauthorized();
+
+      return user;
+    }
+
+
+    private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
         }

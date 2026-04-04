@@ -11,11 +11,14 @@ import { EventsService } from '../../services/events-service';
 export class Events implements OnInit {
 
   eventService = inject(EventsService);
-  events = this.eventService.events;
+  upcomingEvents = this.eventService.upcomingEvents;
+  pastEvents = this.eventService.pastEvents;
+
 
   badgeColors = ['badge-purple', 'badge-green', 'badge-orange'];
 
   ngOnInit() {
-    this.eventService.loadEvents();
+    this.eventService.loadUpcomingEvents();
+    this.eventService.loadPastEvents();
   }
 }

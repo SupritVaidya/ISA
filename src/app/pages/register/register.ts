@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-register',
@@ -11,12 +12,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class Register {
 
+  private userService = inject(UserService);
+
   registerForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     studentId: new FormControl(''),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    passwordHash: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
 
   get firstName() {
@@ -31,14 +34,25 @@ export class Register {
   get studentId() {
     return this.registerForm.get('studentId');
   }
-  get password() {
-    return this.registerForm.get('password');
+  get passwordHash() {
+    return this.registerForm.get('passwordHash');
   }
+  
 
   onSubmit() {
-    if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
-    }
+  if (this.registerForm.valid) {
+    this.userService.getUserByEmail(this.email?.value || '').subscribe({
+      next: () => alert('This email is already in use. Please choose a different one.'),
+      error: () => {
+        this.userService.registerUser(this.registerForm.value as any).subscribe({
+          next: () => alert('Account created successfully! You can now log in.'),
+          error: (err) => console.error('Registration failed', err)
+        });
+      }
+    });
   }
+}
+
+
 
 }

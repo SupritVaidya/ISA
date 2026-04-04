@@ -1,0 +1,60 @@
+<!-- Page Header -->
+<section class="page-header d-flex align-items-center justify-content-center text-center">
+  <div>
+    <h1 class="display-4 fw-bold">Add Blog Post</h1>
+    <p class="lead">Write a new post for the ISA blog</p>
+    <div class="page-header-accent"></div>
+  </div>
+</section>
+
+<!-- Add Blog Section -->
+<section class="py-5 d-flex justify-content-center">
+  <div class="blog-card">
+    <h3 class="fw-bold text-white mb-4 text-center">Post Details</h3>
+
+    <form [formGroup]="addBlogForm" (ngSubmit)="onSubmit()">
+
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" formControlName="title" placeholder="Post title">
+        @if (title?.invalid && title?.touched) {
+          <div class="form-error">Title is required.</div>
+        }
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Author</label>
+        <input type="text" class="form-control" formControlName="author" placeholder="Your name">
+        @if (author?.invalid && author?.touched) {
+          <div class="form-error">Author is required.</div>
+        }
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Date</label>
+        <input type="date" class="form-control" formControlName="date">
+        @if (date?.invalid && date?.touched) {
+          <div class="form-error">Date is required.</div>
+        }
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Excerpt</label>
+        <textarea class="form-control" formControlName="excerpt" rows="4" placeholder="Short summary of the post..."></textarea>
+        @if (excerpt?.invalid && excerpt?.touched) {
+          <div class="form-error">Excerpt is required.</div>
+        }
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Image URL <span class="text-white-50">(optional)</span></label>
+        <input type="text" class="form-control" formControlName="imageUrl" placeholder="https://...">
+      </div>
+
+      <button type="submit" class="btn btn-isa-orange w-100 py-2" [disabled]="addBlogForm.invalid">
+        Publish Post &nbsp;<i class="fas fa-pen-nib"></i>
+      </button>
+
+    </form>
+  </div>
+</section>

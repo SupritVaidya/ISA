@@ -22,4 +22,6 @@ public partial class Event
     public DateTime CreatedAt { get; set; }
 
     public virtual ICollection<EventRegistration> EventRegistrations { get; set; } = new List<EventRegistration>();
+
+    public virtual ICollection<GuestRegistration> GuestRegistrations { get; set; } = new List<GuestRegistration>();
 }

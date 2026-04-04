@@ -6,10 +6,6 @@ namespace ISA_API.Models;
 
 public partial class IsaContext : DbContext
 {
-    public IsaContext()
-    {
-    }
-
     public IsaContext(DbContextOptions<IsaContext> options)
         : base(options)
     {
@@ -19,11 +15,11 @@ public partial class IsaContext : DbContext
 
     public virtual DbSet<EventRegistration> EventRegistrations { get; set; }
 
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<GuestOtp> GuestOtps { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=ISA;Trusted_Connection=True;TrustServerCertificate=True;");
+    public virtual DbSet<GuestRegistration> GuestRegistrations { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -56,6 +52,37 @@ public partial class IsaContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.EventRegistrations)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK_Reg_User");
+        });
+
+        modelBuilder.Entity<GuestOtp>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__GuestOtp__3214EC079EFD0BC8");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Email).HasMaxLength(255);
+            entity.Property(e => e.ExpiresAt).HasColumnType("datetime");
+            entity.Property(e => e.OtpCode).HasMaxLength(10);
+        });
+
+        modelBuilder.Entity<GuestRegistration>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__GuestReg__3214EC07F376D492");
+
+            entity.HasIndex(e => new { e.EventId, e.Email }, "UQ_Guest_Event_Email").IsUnique();
+
+            entity.Property(e => e.Email).HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(200);
+            entity.Property(e => e.Organization).HasMaxLength(200);
+            entity.Property(e => e.RegisteredAt)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasColumnType("datetime");
+
+            entity.HasOne(d => d.Event).WithMany(p => p.GuestRegistrations)
+                .HasForeignKey(d => d.EventId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_GuestReg_Event");
         });
 
         modelBuilder.Entity<User>(entity =>

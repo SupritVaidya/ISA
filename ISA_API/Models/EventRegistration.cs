@@ -13,7 +13,7 @@ public partial class EventRegistration
 
     public DateTime RegisteredAt { get; set; }
 
-    public virtual Event Event { get; set; } = null!;
+    public virtual Event? Event { get; set; }
+    public virtual User? User { get; set; }
 
-    public virtual User User { get; set; } = null!;
 }

@@ -41,6 +41,16 @@ namespace ISA_API.Controllers
             return eventRegistration;
         }
 
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<EventRegistration>>> GetRegistrationsByUserId(int userId)
+        {
+            var registrations = await _context.EventRegistrations
+                .Where(er => er.UserId == userId)
+                .ToListAsync();
+
+            return registrations;
+        }
+
         // PUT: api/EventRegistrations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

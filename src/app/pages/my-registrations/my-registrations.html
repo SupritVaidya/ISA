@@ -1,0 +1,62 @@
+<section class="py-5">
+  <div class="container">
+
+    <div class="text-center mb-5">
+      <h1 class="fw-bold text-white">My Registrations</h1>
+      <p class="text-white-50">Events you have signed up for</p>
+    </div>
+
+    @if (registeredEvents().length === 0) {
+      <div class="text-center py-5">
+        <i class="fas fa-calendar-times fa-3x text-white-50 mb-3"></i>
+        <p class="text-white-50">You haven't registered for any events yet.</p>
+        <a routerLink="/events" class="btn btn-isa-orange mt-2">Browse Events</a>
+      </div>
+    } @else {
+      <div class="d-flex flex-column gap-3">
+        @for (item of registeredEvents(); track item.reg.id; let i = $index) {
+          <div class="isa-card d-flex align-items-center gap-4 p-3 p-md-4">
+
+            <!-- Date Badge -->
+            <div class="event-badge {{ badgeColors[i % 3] }} flex-shrink-0">
+              <span class="badge-month">{{ item.event.eventDate | date:'MMM' }}</span>
+              <span class="badge-day">{{ item.event.eventDate | date:'dd' }}</span>
+            </div>
+
+            <!-- Event Info -->
+            <div class="flex-grow-1 text-start">
+              <h5 class="fw-bold text-white mb-1">{{ item.event.title }}</h5>
+              <p class="text-white-50 small mb-1">{{ item.event.description }}</p>
+              <span class="text-white-50 small">
+                <i class="fas fa-map-marker-alt me-1 text-isa-orange"></i>{{ item.event.location }}
+              </span>
+            </div>
+
+            <!-- Actions -->
+            <div class="d-flex flex-column align-items-end gap-2 flex-shrink-0">
+              <span class="badge bg-success px-3 py-2">
+                <i class="fas fa-check me-1"></i>Registered
+              </span>
+              <button class="btn btn-outline-light btn-sm px-3" (click)="toggleQR(item)">
+                @if (activeQR()?.regId === item.reg.id) {
+                  <i class="fas fa-times me-1"></i>Hide QR
+                } @else {
+                  <i class="fas fa-qrcode me-1"></i>Show QR
+                }
+              </button>
+            </div>
+
+          </div>
+
+          @if (activeQR()?.regId === item.reg.id) {
+            <div class="text-center py-3 border-top border-secondary mt-2">
+              <p class="text-white-50 small mb-2">Scan to verify registration</p>
+              <img [src]="activeQR()!.dataUrl" alt="QR Code" style="border-radius: 8px;">
+            </div>
+          }
+        }
+      </div>
+    }
+
+  </div>
+</section>

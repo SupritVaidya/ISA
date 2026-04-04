@@ -1,0 +1,214 @@
+<section class="py-5">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="mb-4">
+      <a routerLink="/admin" class="btn btn-outline-light btn-sm mb-3">
+        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+      </a>
+      <h1 class="fw-bold text-white">Registrations</h1>
+      <p class="text-white-50">All event registrations — members and guests</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="d-flex gap-2 mb-4">
+      <button class="btn px-4"
+        [class.btn-isa-orange]="activeTab() === 'all'"
+        [class.btn-outline-light]="activeTab() !== 'all'"
+        (click)="activeTab.set('all')">
+        <i class="fas fa-list me-2"></i>All ({{ allRegistrations().length }})
+      </button>
+      <button class="btn px-4"
+        [class.btn-isa-orange]="activeTab() === 'members'"
+        [class.btn-outline-light]="activeTab() !== 'members'"
+        (click)="activeTab.set('members')">
+        <i class="fas fa-user me-2"></i>Members ({{ memberRegistrations().length }})
+      </button>
+      <button class="btn px-4"
+        [class.btn-isa-orange]="activeTab() === 'guests'"
+        [class.btn-outline-light]="activeTab() !== 'guests'"
+        (click)="activeTab.set('guests')">
+        <i class="fas fa-user-friends me-2"></i>Guests ({{ guestRegistrations().length }})
+      </button>
+      <button class="btn px-4"
+        [class.btn-isa-orange]="activeTab() === 'byEvent'"
+        [class.btn-outline-light]="activeTab() !== 'byEvent'"
+        (click)="activeTab.set('byEvent')">
+        <i class="fas fa-calendar-alt me-2"></i>By Event ({{ byEvent().length }})
+      </button>
+    </div>
+
+    <!-- Export Button -->
+    <div class="mb-3 text-end">
+      @if (activeTab() === 'all') {
+        <button class="btn btn-isa-green btn-sm px-4" (click)="exportAll()">
+          <i class="fas fa-file-excel me-2"></i>Export to Excel
+        </button>
+      }
+      @if (activeTab() === 'members') {
+        <button class="btn btn-isa-green btn-sm px-4" (click)="exportMembers()">
+          <i class="fas fa-file-excel me-2"></i>Export to Excel
+        </button>
+      }
+      @if (activeTab() === 'guests') {
+        <button class="btn btn-isa-green btn-sm px-4" (click)="exportGuests()">
+          <i class="fas fa-file-excel me-2"></i>Export to Excel
+        </button>
+      }
+      @if (activeTab() === 'byEvent') {
+        <button class="btn btn-isa-green btn-sm px-4" (click)="exportAll()">
+          <i class="fas fa-file-excel me-2"></i>Export to Excel
+        </button>
+      }
+    </div>
+
+    <!-- All Registrations -->
+    @if (activeTab() === 'all') {
+      @if (allRegistrations().length === 0) {
+        <p class="text-white-50">No registrations yet.</p>
+      } @else {
+        <div class="table-responsive">
+          <table class="table table-dark table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Event</th>
+                <th>Event Date</th>
+                <th>Registered At</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (r of allRegistrations(); track r.email + r.event) {
+                <tr>
+                  <td>
+                    <span class="badge" [class.bg-isa-orange]="r.type === 'Member'" [class.bg-secondary]="r.type === 'Guest'">
+                      {{ r.type }}
+                    </span>
+                  </td>
+                  <td>{{ r.name }}</td>
+                  <td>{{ r.email }}</td>
+                  <td>{{ r.event }}</td>
+                  <td>{{ r.eventDate | date:'MMM d, y' }}</td>
+                  <td>{{ r.registeredAt | date:'MMM d, y' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+
+    <!-- Member Registrations -->
+    @if (activeTab() === 'members') {
+      @if (memberRegistrations().length === 0) {
+        <p class="text-white-50">No member registrations yet.</p>
+      } @else {
+        <div class="table-responsive">
+          <table class="table table-dark table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Student ID</th>
+                <th>Event</th>
+                <th>Event Date</th>
+                <th>Registered At</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (r of memberRegistrations(); track r.id) {
+                <tr>
+                  <td>{{ r.user.firstName }} {{ r.user.lastName }}</td>
+                  <td>{{ r.user.email }}</td>
+                  <td>{{ r.user.studentId || '—' }}</td>
+                  <td>{{ r.event.title }}</td>
+                  <td>{{ r.event.eventDate | date:'MMM d, y' }}</td>
+                  <td>{{ r.registeredAt | date:'MMM d, y' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+
+    <!-- Guest Registrations -->
+    @if (activeTab() === 'guests') {
+      @if (guestRegistrations().length === 0) {
+        <p class="text-white-50">No guest registrations yet.</p>
+      } @else {
+        <div class="table-responsive">
+          <table class="table table-dark table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Organization</th>
+                <th>Event</th>
+                <th>Event Date</th>
+                <th>Registered At</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (r of guestRegistrations(); track r.id) {
+                <tr>
+                  <td>{{ r.name }}</td>
+                  <td>{{ r.email }}</td>
+                  <td>{{ r.organization || '—' }}</td>
+                  <td>{{ r.event.title }}</td>
+                  <td>{{ r.event.eventDate | date:'MMM d, y' }}</td>
+                  <td>{{ r.registeredAt | date:'MMM d, y' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+
+    <!-- By Event -->
+    @if (activeTab() === 'byEvent') {
+      @if (byEvent().length === 0) {
+        <p class="text-white-50">No registrations yet.</p>
+      } @else {
+        @for (group of byEvent(); track group.event) {
+          <div class="isa-card p-4 mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold text-white mb-0">
+                <i class="fas fa-calendar-alt me-2 text-isa-orange"></i>{{ group.event }}
+              </h5>
+              <span class="badge bg-isa-orange px-3 py-2">{{ group.registrations.length }} registered</span>
+            </div>
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Registered At</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (r of group.registrations; track r.email) {
+                  <tr>
+                    <td>
+                      <span class="badge" [class.bg-isa-orange]="r.type === 'Member'" [class.bg-secondary]="r.type === 'Guest'">
+                        {{ r.type }}
+                      </span>
+                    </td>
+                    <td>{{ r.name }}</td>
+                    <td>{{ r.email }}</td>
+                    <td>{{ r.registeredAt | date:'MMM d, y' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      }
+    }
+
+  </div>
+</section>

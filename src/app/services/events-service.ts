@@ -72,6 +72,11 @@ verifyGuestOtp(email: string, eventId: number, otpCode: string, name: string, or
     });
   }
 
+  postEvent(event: { title: string; eventDate: string; location: string; description: string; imageUrl: string }) {
+  return this.http.post<Event>(this.apiUrl, event);
+  }
+
+
 
 
   registerForEvent(userId: number, eventId: number) {

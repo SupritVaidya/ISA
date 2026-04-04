@@ -183,6 +183,25 @@ namespace ISA_API.Controllers
       return Ok(registration);
     }
 
+    [HttpGet("details")]
+    public async Task<IActionResult> GetGuestRegistrationsWithDetails()
+    {
+      var registrations = await _context.GuestRegistrations
+          .Include(r => r.Event)
+          .Select(r => new {
+            r.Id,
+            r.Name,
+            r.Email,
+            r.Organization,
+            r.RegisteredAt,
+            Event = new { r.Event!.Title, r.Event.EventDate, r.Event.Location }
+          })
+          .ToListAsync();
+
+      return Ok(registrations);
+    }
+
+
 
     private bool GuestRegistrationExists(int id)
         {

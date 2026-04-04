@@ -18,5 +18,5 @@ public partial class GuestRegistration
     public DateTime? RegisteredAt { get; set; }
 
     public virtual Event? Event { get; set; }
-
+    
 }

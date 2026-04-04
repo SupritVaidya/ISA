@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { EventsService } from '../../../services/events-service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-add-event',
@@ -9,6 +12,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrl: './add-event.scss',
 })
 export class AddEvent {
+
+private eventsService = inject(EventsService);
+private router = inject(Router);
+
+
 addEventForm = new FormGroup({
   title: new FormControl('', Validators.required),
   date: new FormControl('', Validators.required),
@@ -33,16 +41,28 @@ addEventForm = new FormGroup({
     return this.addEventForm.get('imageUrl');
   }
 
-  onSubmit() {
-    if (this.addEventForm.valid) {
-      const newEvent = this.addEventForm.value;
-      console.log('New Event:', newEvent);
-      // Here you can add logic to save the event, e.g., call a service to send it to a backend
-    } 
-    else {
-      console.log('Form is invalid');
-    }
-  } 
+onSubmit() {
+  if (this.addEventForm.valid) {
+    const formValue = this.addEventForm.value;
+    const newEvent = {
+      title: formValue.title!,
+      eventDate: formValue.date!,
+      location: formValue.location!,
+      description: formValue.description!,
+      imageUrl: formValue.imageUrl || ''
+    };
+
+    this.eventsService.postEvent(newEvent).subscribe({
+      next: () => {
+        alert('Event created successfully!');
+        this.addEventForm.reset();
+        this.router.navigate(['/admin']);
+      },
+      error: () => alert('Failed to create event. Please try again.')
+    });
+  }
+}
+ 
 
 
 }

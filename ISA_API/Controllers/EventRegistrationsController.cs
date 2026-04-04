@@ -109,7 +109,25 @@ namespace ISA_API.Controllers
             return NoContent();
         }
 
-        private bool EventRegistrationExists(int id)
+        [HttpGet("details")]
+        public async Task<IActionResult> GetRegistrationsWithDetails()
+        {
+          var registrations = await _context.EventRegistrations
+              .Include(r => r.User)
+              .Include(r => r.Event)
+              .Select(r => new {
+                r.Id,
+                r.RegisteredAt,
+                User = new { r.User!.FirstName, r.User.LastName, r.User.Email, r.User.StudentId },
+                Event = new { r.Event!.Title, r.Event.EventDate, r.Event.Location }
+              })
+              .ToListAsync();
+
+          return Ok(registrations);
+        }
+
+
+    private bool EventRegistrationExists(int id)
         {
             return _context.EventRegistrations.Any(e => e.Id == id);
         }

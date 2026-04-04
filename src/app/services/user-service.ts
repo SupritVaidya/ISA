@@ -9,6 +9,7 @@ export interface User {
   email: string;
   studentId: string;
   passwordHash: string;
+  isAdmin: boolean;
 }
 
 

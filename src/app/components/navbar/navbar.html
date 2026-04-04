@@ -49,6 +49,12 @@
           <a ngbDropdownItem routerLink="/my-registrations">
             <i class="fas fa-calendar-check me-2"></i>My Registrations
           </a>
+          @if (currentUser()!.isAdmin) {
+            <div class="dropdown-divider"></div>
+            <a ngbDropdownItem routerLink="/admin">
+              <i class="fas fa-shield-alt me-2 text-isa-orange"></i>Admin Portal
+            </a>
+          }
           <div class="dropdown-divider"></div>
           <button ngbDropdownItem class="text-danger" (click)="logout()">
             <i class="fas fa-sign-out-alt me-2"></i>Logout

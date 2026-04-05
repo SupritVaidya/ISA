@@ -3,6 +3,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventsService, Event } from '../../../services/events-service';
 import { UserService } from '../../../services/user-service';
 import { DatePipe } from '@angular/common';
+import QRCode from 'qrcode';
+
 
 @Component({
   selector: 'app-event-register',
@@ -25,6 +27,8 @@ export class EventRegister implements OnInit {
   guestEmail = signal('');
   guestOrg = signal('');
   guestOtp = signal('');
+
+  guestQRDataUrl = signal<string | null>(null);
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -78,18 +82,31 @@ export class EventRegister implements OnInit {
   }
 
   onVerifyOtp(otpCode: string) {
-    this.eventsService.verifyGuestOtp(
-      this.guestEmail(),
-      this.event()!.id,
-      otpCode,
-      this.guestName(),
-      this.guestOrg()
-    ).subscribe({
-      next: () => this.guestStep.set('done'),
-      error: (err) => {
-        if (err.status === 400) alert(err.error);
-        else alert('Verification failed. Please try again.');
-      }
-    });
+  this.eventsService.verifyGuestOtp(
+    this.guestEmail(),
+    this.event()!.id,
+    otpCode,
+    this.guestName(),
+    this.guestOrg()
+  ).subscribe({
+    next: async () => {
+      this.guestStep.set('done');
+      const data = JSON.stringify({
+        name: this.guestName(),
+        email: this.guestEmail(),
+        organization: this.guestOrg(),
+        event: this.event()!.title,
+        date: this.event()!.eventDate,
+        location: this.event()!.location
+      });
+      const url = await QRCode.toDataURL(data, { width: 250, margin: 2 });
+      this.guestQRDataUrl.set(url);
+    },
+    error: (err) => {
+      if (err.status === 400) alert(err.error);
+      else alert('Verification failed. Please try again.');
+    }
+  });
   }
+
 }

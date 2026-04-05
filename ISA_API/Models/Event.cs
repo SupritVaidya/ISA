@@ -17,6 +17,8 @@ public partial class Event
 
     public string? ImageUrl { get; set; }
 
+    public string? DriveUrl { get; set; }
+
     public int? MaxCapacity { get; set; }
 
     public DateTime CreatedAt { get; set; }

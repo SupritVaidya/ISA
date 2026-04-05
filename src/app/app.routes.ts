@@ -16,6 +16,9 @@ export const routes: Routes = [
   { path: 'admin/add-event', canActivate: [adminGuard], loadComponent: () => import('./pages/admin/add-event/add-event').then(m => m.AddEvent) },
   { path: 'admin/add-blog', canActivate: [adminGuard], loadComponent: () => import('./pages/admin/add-blog/add-blog').then(m => m.AddBlog) },
   { path: 'admin/registrations', canActivate: [adminGuard], loadComponent: () => import('./pages/admin/registrations/registrations').then(m => m.Registrations) },
+  { path: 'admin/manage-events', canActivate: [adminGuard], loadComponent: () => import('./pages/admin/manage-events/manage-events').then(m => m.ManageEvents) },
+  { path: 'admin/manage-users', canActivate: [adminGuard], loadComponent: () => import('./pages/admin/manage-users/manage-users').then(m => m.ManageUsers) },
+  { path: 'admin/edit-event/:id', canActivate: [adminGuard], loadComponent: () => import('./pages/admin/edit-event/edit-event').then(m => m.EditEvent) },
 
   { path: '**', redirectTo: 'home' }
 ];

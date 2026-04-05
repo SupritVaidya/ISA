@@ -46,9 +46,14 @@
         }
       </div>
 
-      <div class="mb-4">
+      <div class="mb-3">
         <label class="form-label">Image URL <span class="text-white-50">(optional)</span></label>
         <input type="text" class="form-control" formControlName="imageUrl" placeholder="https://...">
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Drive Folder URL <span class="text-white-50">(optional — shown on past events)</span></label>
+        <input type="text" class="form-control" formControlName="driveUrl" placeholder="https://drive.google.com/...">
       </div>
 
       <button type="submit" class="btn btn-isa-orange w-100 py-2" [disabled]="addEventForm.invalid">

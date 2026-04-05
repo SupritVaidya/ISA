@@ -1,0 +1,41 @@
+.page-header {
+  min-height: 30vh;
+  background: linear-gradient(135deg, #1a0a0a 0%, #0d0d1a 60%, #0a1a2e 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+
+  h1 { color: #fff; }
+  p  { color: rgba(255,255,255,0.6); }
+}
+
+.page-header-accent {
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--isa-orange), var(--isa-green));
+  margin: 0.75rem auto 0;
+  border-radius: 2px;
+}
+
+.manage-table {
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  overflow: hidden;
+
+  thead th {
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.6);
+    font-weight: 500;
+    border-color: rgba(255,255,255,0.08);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  tbody tr {
+    border-color: rgba(255,255,255,0.06);
+    &:hover { background: rgba(255,255,255,0.04); }
+  }
+
+  td { border-color: rgba(255,255,255,0.06); }
+}
+
+.bg-isa-orange { background-color: var(--isa-orange) !important; }

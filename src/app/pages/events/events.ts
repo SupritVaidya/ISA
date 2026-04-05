@@ -25,6 +25,10 @@ export class Events implements OnInit {
 
   badgeColors = ['badge-purple', 'badge-green', 'badge-orange'];
 
+  openDrive(url: string) {
+    window.open(url, '_blank');
+  }
+
   ngOnInit() {
     this.eventService.loadUpcomingEvents();
     this.eventService.loadPastEvents();

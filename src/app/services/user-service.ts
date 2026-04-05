@@ -35,6 +35,14 @@ export class UserService {
     return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 
+  getAllUsers() {
+    return this.http.get<User[]>(this.apiUrl);
+  }
+
+  deleteUser(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
   registerUser(user: User) {
     return this.http.post<User>(this.apiUrl, user);
   }

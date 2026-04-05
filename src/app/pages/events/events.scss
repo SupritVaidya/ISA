@@ -100,6 +100,7 @@
 .event-gallery-card {
   transition: transform 0.2s;
   &:hover { transform: translateY(-4px); }
+  &.clickable { cursor: pointer; }
 }
 
 .event-gallery-img {

@@ -11,6 +11,7 @@ export interface Event {
   description: string;
   location: string;
   imageUrl: string;
+  driveUrl?: string;
 }
 
 export interface EventRegistration {
@@ -31,6 +32,10 @@ export class EventsService {
   upcomingEvents = signal<Event[]>([]);
   pastEvents = signal<Event[]>([]);
 
+
+  getAllEvents() {
+    return this.http.get<Event[]>(this.apiUrl);
+  }
 
   loadUpcomingEvents() {
     // Loading the upcoming events from API
@@ -72,8 +77,16 @@ verifyGuestOtp(email: string, eventId: number, otpCode: string, name: string, or
     });
   }
 
-  postEvent(event: { title: string; eventDate: string; location: string; description: string; imageUrl: string }) {
-  return this.http.post<Event>(this.apiUrl, event);
+  postEvent(event: { title: string; eventDate: string; location: string; description: string; imageUrl: string; driveUrl: string }) {
+    return this.http.post<Event>(this.apiUrl, event);
+  }
+
+  updateEvent(id: number, event: { id: number; title: string; eventDate: string; location: string; description: string; imageUrl: string; driveUrl: string }) {
+    return this.http.put(`${this.apiUrl}/${id}`, event);
+  }
+
+  deleteEvent(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
 

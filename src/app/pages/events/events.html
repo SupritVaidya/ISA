@@ -58,11 +58,18 @@
     <div class="row g-4">
       @for (event of pastEvents(); track event.id) {
         <div class="col-md-4">
-          <div class="isa-card overflow-hidden event-gallery-card">
+          <div class="isa-card overflow-hidden event-gallery-card"
+            [class.clickable]="event.driveUrl"
+            (click)="event.driveUrl && openDrive(event.driveUrl)">
             <img [src]="event.imageUrl" [alt]="event.title" class="w-100 event-gallery-img">
-            <div class="p-3">
-              <h6 class="fw-bold text-white mb-1">{{ event.title }}</h6>
-              <p class="text-white-50 small mb-0">{{ event.description }}</p>
+            <div class="p-3 d-flex justify-content-between align-items-end">
+              <div>
+                <h6 class="fw-bold text-white mb-1">{{ event.title }}</h6>
+                <p class="text-white-50 small mb-0">{{ event.description }}</p>
+              </div>
+              @if (event.driveUrl) {
+                <i class="fab fa-google-drive text-isa-orange ms-2 flex-shrink-0" title="View photos"></i>
+              }
             </div>
           </div>
         </div>

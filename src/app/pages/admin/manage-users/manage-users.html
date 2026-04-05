@@ -1,0 +1,73 @@
+<!-- Page Header -->
+<section class="page-header d-flex align-items-center justify-content-center text-center">
+  <div>
+    <h1 class="display-4 fw-bold">Manage Users</h1>
+    <p class="lead">View and remove registered members</p>
+    <div class="page-header-accent"></div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+
+    <div class="mb-4">
+      <a routerLink="/admin" class="btn btn-outline-light btn-sm">
+        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+      </a>
+    </div>
+
+    @if (loading) {
+      <p class="text-white-50 text-center">Loading users...</p>
+    } @else if (users.length === 0) {
+      <p class="text-white-50 text-center">No users found.</p>
+    } @else {
+      <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle manage-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Student ID</th>
+              <th>Role</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (user of users; track user.id) {
+              <tr>
+                <td class="fw-semibold">{{ user.firstName }} {{ user.lastName }}</td>
+                <td class="text-white-50">{{ user.email }}</td>
+                <td class="text-white-50">{{ user.studentId }}</td>
+                <td>
+                  @if (user.isAdmin) {
+                    <span class="badge bg-isa-orange">Admin</span>
+                  } @else {
+                    <span class="badge bg-secondary">Member</span>
+                  }
+                </td>
+                <td class="text-end">
+                  @if (user.id === currentUserId) {
+                    <span class="text-white-50 small">You</span>
+                  } @else if (user.isAdmin) {
+                    <span class="text-white-50 small">Admin</span>
+                  } @else {
+                    <button class="btn btn-sm btn-outline-danger"
+                      [disabled]="deletingId === user.id"
+                      (click)="deleteUser(user.id, user.firstName + ' ' + user.lastName)">
+                      @if (deletingId === user.id) {
+                        Removing...
+                      } @else {
+                        <i class="fas fa-user-minus"></i> Remove
+                      }
+                    </button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+  </div>
+</section>

@@ -22,7 +22,8 @@ addEventForm = new FormGroup({
   date: new FormControl('', Validators.required),
   location: new FormControl('', Validators.required),
   description: new FormControl('', Validators.required),
-  imageUrl: new FormControl('')
+  imageUrl: new FormControl(''),
+  driveUrl: new FormControl('')
 });
 
   get title() {
@@ -49,7 +50,8 @@ onSubmit() {
       eventDate: formValue.date!,
       location: formValue.location!,
       description: formValue.description!,
-      imageUrl: formValue.imageUrl || ''
+      imageUrl: formValue.imageUrl || '',
+      driveUrl: formValue.driveUrl || ''
     };
 
     this.eventsService.postEvent(newEvent).subscribe({

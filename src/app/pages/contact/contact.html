@@ -28,8 +28,18 @@
             <label class="form-label">Message</label>
             <textarea class="form-control" formControlName="message" rows="5" placeholder="Your message"></textarea>
           </div>
-          <button type="submit" class="btn btn-isa-orange px-5">
-            Send Message &nbsp;<i class="fas fa-paper-plane"></i>
+          @if (submitted) {
+            <div class="alert alert-success">Thank you! Your message has been sent.</div>
+          }
+          @if (error) {
+            <div class="alert alert-danger">Something went wrong. Please try again.</div>
+          }
+          <button type="submit" class="btn btn-isa-orange px-5" [disabled]="submitting || contactForm.invalid">
+            @if (!submitting) {
+              Send Message &nbsp;<i class="fas fa-paper-plane"></i>
+            } @else {
+              Sending...
+            }
           </button>
         </form>
       </div>

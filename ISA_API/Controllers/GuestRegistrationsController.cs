@@ -182,73 +182,81 @@ namespace ISA_API.Controllers
 
       var eventDetails = await _context.Events.FindAsync(request.EventId);
 
-      var qrData = System.Text.Json.JsonSerializer.Serialize(new
+      try
       {
-        name = request.Name,
-        email = request.Email,
-        organization = request.Organization,
-        @event = eventDetails!.Title,
-        date = eventDetails.EventDate.ToString("yyyy-MM-dd"),
-        location = eventDetails.Location
-      });
+        var qrData = System.Text.Json.JsonSerializer.Serialize(new
+        {
+          name = request.Name,
+          email = request.Email,
+          organization = request.Organization,
+          @event = eventDetails!.Title,
+          date = eventDetails.EventDate.ToString("yyyy-MM-dd"),
+          location = eventDetails.Location
+        });
 
-      using var qrGenerator = new QRCoder.QRCodeGenerator();
-      var qrCodeData = qrGenerator.CreateQrCode(qrData, QRCoder.QRCodeGenerator.ECCLevel.Q);
-      using var qrCode = new QRCoder.PngByteQRCode(qrCodeData);
-      var qrBytes = qrCode.GetGraphic(10);
-      var qrBytesCopy = qrBytes.ToArray();
+        using var qrGenerator = new QRCoder.QRCodeGenerator();
+        var qrCodeData = qrGenerator.CreateQrCode(qrData, QRCoder.QRCodeGenerator.ECCLevel.Q);
+        using var qrCode = new QRCoder.PngByteQRCode(qrCodeData);
+        var qrBytes = qrCode.GetGraphic(10);
+        var qrBytesCopy = qrBytes.ToArray();
 
-      var guestName = request.Name;
-      var guestEmail = request.Email;
-      var eventTitle = eventDetails.Title;
-      var eventDate = eventDetails.EventDate;
-      var eventLocation = eventDetails.Location;
+        var guestName = request.Name;
+        var guestEmail = request.Email;
+        var eventTitle = eventDetails.Title;
+        var eventDate = eventDetails.EventDate;
+        var eventLocation = eventDetails.Location;
 
-      _ = Task.Run(async () =>
+        _ = Task.Run(async () =>
+        {
+          try
+          {
+            using var ms = new System.IO.MemoryStream(qrBytesCopy);
+            var linkedResource = new System.Net.Mail.LinkedResource(ms, "image/png") { ContentId = "qrcode" };
+
+            var htmlBody = $@"
+                    <h2>You're registered!</h2>
+                    <p>Hi {guestName},</p>
+                    <p>Your registration for <strong>{eventTitle}</strong> is confirmed.</p>
+                    <p><strong>Date:</strong> {eventDate:MMMM d, yyyy}</p>
+                    <p><strong>Location:</strong> {eventLocation}</p>
+                    <p>Please show the QR code below at the event entrance:</p>
+                    <img src='cid:qrcode' alt='QR Code' style='width:250px;height:250px;'/>
+                    <br/><br/>
+                    <p>See you there!<br/>ISA Koblenz Team</p>
+                ";
+
+            var alternateView = System.Net.Mail.AlternateView.CreateAlternateViewFromString(htmlBody, null, "text/html");
+            alternateView.LinkedResources.Add(linkedResource);
+
+            using var smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587)
+            {
+              Credentials = new System.Net.NetworkCredential("suprit.vaidya@gmail.com", "kcxd wkbr kcoc spbh"),
+              EnableSsl = true
+            };
+
+            var mail = new System.Net.Mail.MailMessage
+            {
+              From = new System.Net.Mail.MailAddress("suprit.vaidya@gmail.com", "ISA Koblenz"),
+              Subject = $"Registration Confirmed — {eventTitle}"
+            };
+            mail.AlternateViews.Add(alternateView);
+            mail.To.Add(guestEmail);
+            await smtp.SendMailAsync(mail);
+          }
+          catch (Exception ex)
+          {
+            Console.WriteLine($"Email failed: {ex.Message}");
+          }
+        });
+      }
+      catch (Exception ex)
       {
-        try
-        {
-          using var ms = new System.IO.MemoryStream(qrBytesCopy);
-          var linkedResource = new System.Net.Mail.LinkedResource(ms, "image/png") { ContentId = "qrcode" };
-
-          var htmlBody = $@"
-                <h2>You're registered!</h2>
-                <p>Hi {guestName},</p>
-                <p>Your registration for <strong>{eventTitle}</strong> is confirmed.</p>
-                <p><strong>Date:</strong> {eventDate:MMMM d, yyyy}</p>
-                <p><strong>Location:</strong> {eventLocation}</p>
-                <p>Please show the QR code below at the event entrance:</p>
-                <img src='cid:qrcode' alt='QR Code' style='width:250px;height:250px;'/>
-                <br/><br/>
-                <p>See you there!<br/>ISA Koblenz Team</p>
-            ";
-
-          var alternateView = System.Net.Mail.AlternateView.CreateAlternateViewFromString(htmlBody, null, "text/html");
-          alternateView.LinkedResources.Add(linkedResource);
-
-          using var smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587)
-          {
-            Credentials = new System.Net.NetworkCredential("suprit.vaidya@gmail.com", "kcxd wkbr kcoc spbh"),
-            EnableSsl = true
-          };
-
-          var mail = new System.Net.Mail.MailMessage
-          {
-            From = new System.Net.Mail.MailAddress("suprit.vaidya@gmail.com", "ISA Koblenz"),
-            Subject = $"Registration Confirmed — {eventTitle}"
-          };
-          mail.AlternateViews.Add(alternateView);
-          mail.To.Add(guestEmail);
-          await smtp.SendMailAsync(mail);
-        }
-        catch (Exception ex)
-        {
-          Console.WriteLine($"Email failed: {ex.Message}");
-        }
-      });
+        Console.WriteLine($"QR/Email setup failed: {ex.Message}");
+      }
 
       return Ok(registration);
     }
+
 
 
 
